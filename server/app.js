@@ -7,7 +7,6 @@ const bcrypt = require("bcrypt");
 const app = express();
 
 const authRoutes = require("./routes/auth");
-const userRoutes = require("./routes/user");
 
 mongoose.connect(
         'mongodb://localhost:27017/test', {
@@ -40,15 +39,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get("/signup", (req, res, next) => {
-    bcrypt.hash("test", "abcdefgh")
-});
-
-app.post("/login", (req, res, next) => {
-
-});
-
-app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 
 module.exports = app;
