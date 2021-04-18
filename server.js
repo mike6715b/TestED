@@ -2,6 +2,8 @@ const app = require("./server/app");
 const debug = require("debug")("node-angular");
 const http = require("http");
 
+require('dotenv').config()
+
 const normalizePort = val => {
     var port = parseInt(val, 10);
 
@@ -43,7 +45,8 @@ const onListening = () => {
     debug("Listening on " + bind);
 };
 
-const port = normalizePort(process.env.PORT || "3000");
+const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
+console.log("Listening on port: " + port);
 app.set("port", port);
 
 const server = http.createServer(app);

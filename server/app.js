@@ -9,9 +9,10 @@ const app = express();
 const authRoutes = require("./routes/auth");
 
 mongoose.connect(
-        'mongodb://localhost:27017/test', {
+        process.env.MONGO_DB, {
             useNewUrlParser: true,
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
+            useCreateIndex: true
         })
     .then(() => {
         console.log("Connected to database!");
@@ -40,5 +41,11 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/auth", authRoutes);
+
+app.get('*', function(req, res) {
+    res.status(404).json({
+        message: "Not found!"
+    });
+});
 
 module.exports = app;

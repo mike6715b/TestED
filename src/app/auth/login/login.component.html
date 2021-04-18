@@ -1,0 +1,22 @@
+<div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="box">
+        <mat-card-header>
+            <mat-card-title> Prijava </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+                <mat-form-field appearance="outline" [color]="email && email.valid && 'accent'">
+                    <mat-label>E-mail</mat-label>
+                    <input matInput placeholder="E-mail addresa" type="email" class="full-width" formControlName="email" />
+                    <mat-error *ngIf="email.invalid">{{ getErrorMessage('email') }}</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" [color]="password && password.valid && 'accent'">
+                    <mat-label>Lozinka</mat-label>
+                    <input matInput placeholder="Lozinka" type="password" class="full-width" formControlName="password" />
+                    <mat-error *ngIf="password.invalid">{{ getErrorMessage('password') }}</mat-error>
+                </mat-form-field>
+                <button mat-button color="accent" (click)="onSubmit()">Prijava</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

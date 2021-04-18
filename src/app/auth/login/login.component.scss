@@ -1,0 +1,50 @@
+.main-wrapper {
+    height: 100%;
+}
+
+.main-wrapper {
+    display: grid;
+    place-items: center;
+}
+
+.main-wrapper .login-form {
+    min-width: 100%;
+    max-width: 300px;
+    width: 100%;
+}
+
+.main-wrapper .full-width,
+.main-wrapper .btn-block {
+    width: 100%;
+}
+
+.main-wrapper mat-card-header {
+    text-align: center;
+    width: 100%;
+    display: block;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.mat-card-content {
+    display: grid;
+    place-items: center;
+}
+
+.main-wrapper mat-card-header mat-card-title {
+    font-size: 30px;
+    margin: 0;
+}
+
+.main-wrapper .mat-card {
+    padding: 45px 70px 55px;
+}
+
+.main-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0.8375em 0;
+}
+
+form {
+    display: grid;
+    padding: 40px;
+}

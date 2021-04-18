@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'TestED';
+  title = 'TestED : Sustav za online provjeru znanja';
+
+  constructor(private auth: AuthService) {
+    auth.autoAuthUser();
+  }
 }
