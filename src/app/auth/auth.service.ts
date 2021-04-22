@@ -22,7 +22,7 @@ export class AuthService {
     this.user = this.userSubject.asObservable();
   }
 
-  public get userValue(): User {
+  get userValue(): User {
     return this.userSubject.value;
   }
 
@@ -45,7 +45,6 @@ export class AuthService {
         withCredentials: true,
       }).subscribe(response => {
           const user = this.user = response;
-          console.log("user: " + user);
           const token = user.jwtToken;
           if (token) {
             console.log(token);
@@ -98,7 +97,6 @@ export class AuthService {
     // set a timeout to refresh the token a minute before it expires
     const expires = new Date(jwtToken.exp * 1000);
     const timeout = expires.getTime() - Date.now() - 60 * 1000;
-    console.log(timeout)
     this.refreshTokenTimeout = setTimeout(
       () => this.refreshToken().subscribe(),
       timeout
