@@ -60,6 +60,7 @@ export class AuthService {
   }
 
   logout() {
+    this.http.post<any>(environment.api_url + "/user/revoke-token", {}, { withCredentials: true }).subscribe();
     this.token = null;
     this.isAuthenticated = false;
     this.authStateListener.next(false);
