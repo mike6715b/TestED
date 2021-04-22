@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { ErrorInterceptor } from './auth/error-interceptor.interceptor';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { appInitializer } from './app.initializer';
+import { AuthService } from './auth/auth.service';
 
 
 @NgModule({
@@ -45,7 +48,10 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     MatInputModule,
     HttpClientModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService] },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

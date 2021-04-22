@@ -31,12 +31,12 @@ export class LoginComponent implements OnInit {
       if (this.form.get('email').hasError('required')) {
         return 'Polje je obavezno';
       }
-      return this.form.get('email').hasError('email') ? 'Nije važeća e-mail adresa' : '';
+      return this.form.get('email').hasError('email') ? 'Invalid E-mail address' : '';
     } else {
       if (this.form.get('password').hasError('required')) {
         return 'Polje je obavezno';
       }
-      return this.form.get('password').hasError('minlength') ? 'Lozinka mora sadrzavati minimalno 8 znakova' : '';
+      return this.form.get('password').hasError('minlength') ? 'Password must contain 8 characters' : '';
     }
   }
 
@@ -55,7 +55,6 @@ export class LoginComponent implements OnInit {
 
     const email = this.email.value;
     const password = this.password.value;
-
     this.auth.login(email, password);
   }
 

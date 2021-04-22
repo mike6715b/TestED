@@ -1,12 +1,19 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-
-// const Post = require("./models/post");
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
-const authRoutes = require("./routes/auth");
+require('dotenv').config();
+const userRoutes = require("./routes/user-controller");
+
+
+const corsOptions = {
+    origin: 'http://localhost:4200',
+    optionsSuccessStatus: 200,
+    credentials: true
+}
 
 mongoose.connect(
         process.env.MONGO_DB, {
@@ -25,10 +32,14 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: false
 }));
+app.use(cookieParser());
+
+//Enabling cors
+app.use(cors(corsOptions));
 
 //Headers
 app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    // res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept, Authorization"
@@ -37,10 +48,14 @@ app.use((req, res, next) => {
         "Access-Control-Allow-Methods",
         "GET, POST, PATCH, DELETE, OPTIONS"
     );
+    res.setHeader(
+        "Access-Control-Allow-Credentials",
+        "true"
+    )
     next();
 });
 
-app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 
 app.get('*', function(req, res) {
     res.status(404).json({

@@ -1,19 +1,30 @@
+import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { User } from '../models/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private token: string;
-  private tokenTimer: any;
   private isAuthenticated: boolean = false;
   private authStateListener = new Subject<boolean>();
+  private userSubject: BehaviorSubject<User>;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  public user: Observable<User>;
+
+  constructor(private http: HttpClient, private router: Router) {
+    this.userSubject = new BehaviorSubject<User>(null);
+    this.user = this.userSubject.asObservable();
+  }
+
+  public get userValue(): User {
+    return this.userSubject.value;
+  }
 
   get authToken(): string {
     return this.token;
@@ -28,75 +39,73 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    const authData = {email: email, password: password};
-    this.http.post<{token: string, expiresIn: number}>(environment.api_url + "/auth/login", authData)
-      .subscribe(response => {
-        const token = response.token;
-        this.token = token;
-        if (token) {
-          const expiresInDuration = response.expiresIn;
-          this.setAuthTimer(expiresInDuration);
+    const authData = { email: email, password: password };
+    this.http
+      .post<any>(environment.api_url + '/user/authenticate', authData, {
+        withCredentials: true,
+      }).subscribe(response => {
+          const user = this.user = response;
+          console.log("user: " + user);
+          const token = user.jwtToken;
+          if (token) {
+            console.log(token);
+            this.token = token;
+            this.isAuthenticated = true;
+            this.authStateListener.next(true);
+            this.userSubject.next(user);
+            this.startRefreshTokenTimer();
 
-          this.isAuthenticated = true;
-          this.authStateListener.next(true);
-
-          const now = new Date();
-          const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-
-          this.saveAuthData(token, expirationDate)
-          this.router.navigate(["dashboard"]);
-        }
+            this.router.navigate(['/dashboard']);
+          }
       });
   }
 
   logout() {
     this.token = null;
-    this.isAuthenticated = false
+    this.isAuthenticated = false;
     this.authStateListener.next(false);
-    this.router.navigate(["/login"]);
+    this.userSubject.next(null);
+    this.stopRefreshTokenTimer();
+    this.router.navigate(['/login']);
   }
 
-  autoAuthUser() {
-    const authInformation = this.getAuthData();
-    if (!authInformation) {
-      return;
-    }
-    const now = new Date();
-    const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
-    if (expiresIn > 0) {
-      this.token = authInformation.token;
-      this.isAuthenticated = true;
-      this.setAuthTimer(expiresIn / 1000);
-      this.authStateListener.next(true);
-    }
+  refreshToken() {
+    return this.http
+      .post<User>(
+        environment.api_url + '/user/refresh-token',
+        {},
+        { withCredentials: true }
+      )
+      .pipe(
+        map((user) => {
+          const token = user.jwtToken;
+          this.token = token;
+          this.userSubject.next(user);
+          this.isAuthenticated = true;
+          this.authStateListener.next(true);
+          this.startRefreshTokenTimer();
+          return user;
+        })
+      );
   }
 
-  private setAuthTimer(duration: number) {
-    console.log("Setting timer: " + duration);
-    this.tokenTimer = setTimeout(() => {
-      this.logout();
-    }, duration * 1000);
+  private refreshTokenTimeout;
+
+  private startRefreshTokenTimer() {
+    // parse json object from base64 encoded jwt token
+    const jwtToken = JSON.parse(atob(this.userValue.jwtToken.split('.')[1]));
+
+    // set a timeout to refresh the token a minute before it expires
+    const expires = new Date(jwtToken.exp * 1000);
+    const timeout = expires.getTime() - Date.now() - 60 * 1000;
+    console.log(timeout)
+    this.refreshTokenTimeout = setTimeout(
+      () => this.refreshToken().subscribe(),
+      timeout
+    );
   }
 
-  private saveAuthData(token: string, expirationDate: Date) {
-    localStorage.setItem("token", token);
-    localStorage.setItem("expiration", expirationDate.toISOString());
-  }
-
-  private clearAuthData() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("expiration");
-  }
-
-  private getAuthData() {
-    const token = localStorage.getItem("token");
-    const expirationDate = localStorage.getItem("expiration");
-    if (!token || !expirationDate) {
-      return null;
-    }
-    return {
-      token: token,
-      expirationDate: new Date(expirationDate)
-    }
+  private stopRefreshTokenTimer() {
+    clearTimeout(this.refreshTokenTimeout);
   }
 }

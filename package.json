@@ -8,7 +8,7 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "start:server": "nodemon server.js"
+        "start:server": "nodemon -r dotenv/config server.js"
     },
     "private": true,
     "dependencies": {
@@ -24,7 +24,12 @@
         "@angular/router": "~11.2.7",
         "bcrypt": "^5.0.1",
         "body-parser": "^1.19.0",
+        "cookie-parser": "^1.4.5",
+        "cors": "^2.8.5",
+        "crypto-js": "^4.0.0",
         "dotenv": "^8.2.0",
+        "express-jwt": "^6.0.0",
+        "joi": "^17.4.0",
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^5.12.3",
         "mongoose-unique-validator": "^2.0.3",
@@ -37,6 +42,7 @@
         "@angular-devkit/build-angular": "~0.1102.6",
         "@angular/cli": "~11.2.6",
         "@angular/compiler-cli": "~11.2.7",
+        "@types/cors": "^2.8.10",
         "@types/jasmine": "~3.6.0",
         "@types/node": "^12.11.1",
         "codelyzer": "^6.0.0",

@@ -11,8 +11,8 @@
                     <mat-error *ngIf="email.invalid">{{ getErrorMessage('email') }}</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline" [color]="password && password.valid && 'accent'">
-                    <mat-label>Lozinka</mat-label>
-                    <input matInput placeholder="Lozinka" type="password" class="full-width" formControlName="password" />
+                    <mat-label>Password</mat-label>
+                    <input matInput placeholder="Password" type="password" class="full-width" formControlName="password" />
                     <mat-error *ngIf="password.invalid">{{ getErrorMessage('password') }}</mat-error>
                 </mat-form-field>
                 <button mat-button color="accent" (click)="onSubmit()">Prijava</button>

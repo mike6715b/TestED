@@ -9,7 +9,5 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent {
   title = 'TestED : Sustav za online provjeru znanja';
 
-  constructor(private auth: AuthService) {
-    auth.autoAuthUser();
-  }
+  constructor() {}
 }
