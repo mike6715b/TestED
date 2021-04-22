@@ -26,6 +26,23 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>TestED</span>
+
+      <span class="fill-space"></span>
+
+      <button
+        mat-button
+        [matMenuTriggerFor]="menu"
+        aria-label="Button to open menu"
+      >
+        <span *ngIf="user">{{ user.name }}</span>
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu">
+        <a mat-menu-item routerLink="/contact"><span>Kontakt</span></a>
+        <a mat-menu-item routerLink="/info"><span>Informacije</span></a>
+        <a mat-menu-item (click)="logout()" *ngIf="user"><span>Odjava</span></a>
+      </mat-menu>
     </mat-toolbar>
     <ng-content></ng-content>
   </mat-sidenav-content>

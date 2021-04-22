@@ -14,7 +14,9 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
 
   constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) {
-    
+    if (this.auth.userValue) {
+      this.router.navigate(['/dashboard']);
+    }
   }
 
   ngOnInit(): void {
