@@ -106,7 +106,7 @@ function generateJwtToken(user) {
 }
 
 function generateRefreshToken(user, ipAddress) {
-    // create a refresh token that expires in 1 hours
+    // create a refresh token that expires in 2 hours
     return new RefreshToken({
         user: user.id,
         token: randomTokenString(),
