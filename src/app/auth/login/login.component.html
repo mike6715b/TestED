@@ -4,7 +4,7 @@
             <mat-card-title> Prijava </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+            <form [formGroup]="form" class="login-form">
                 <mat-form-field appearance="outline" [color]="email && email.valid && 'accent'">
                     <mat-label>E-mail</mat-label>
                     <input matInput placeholder="E-mail addresa" type="email" class="full-width" formControlName="email" />
