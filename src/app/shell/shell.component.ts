@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../models/user';
+import { ProgressBarMode } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-shell',
@@ -14,6 +15,7 @@ export class ShellComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
   user: User;
+  mode: ProgressBarMode  = 'determinate';
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)

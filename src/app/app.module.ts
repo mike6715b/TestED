@@ -23,6 +23,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { appInitializer } from './app.initializer';
 import { AuthService } from './auth/auth.service';
 import {MatMenuModule} from '@angular/material/menu';
+import { UsersComponent } from './dashboard/users/users.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 @NgModule({
@@ -30,7 +32,8 @@ import {MatMenuModule} from '@angular/material/menu';
     AppComponent,
     ShellComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ import {MatMenuModule} from '@angular/material/menu';
     MatInputModule,
     HttpClientModule,
     MatMenuModule,
+    MatProgressBarModule
     
   ],
   providers: [
