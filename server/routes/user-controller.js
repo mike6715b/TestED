@@ -10,7 +10,7 @@ const userService = require('./user-service');
 router.post('/authenticate', authenticateSchema, authenticate);
 router.post('/refresh-token', refreshToken);
 router.post('/revoke-token', authorize(), revokeTokenSchema, revokeToken);
-router.get('/', authorize(Role.Admin), getAll);
+router.get('/', authorize([Role.Admin, Role.su]), getAll);
 router.get('/:id', authorize(), getById);
 router.get('/:id/refresh-tokens', authorize(), getRefreshTokens);
 

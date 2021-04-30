@@ -1,5 +1,6 @@
 module.exports = {
-    Admin: 'Admin',
-    User: 'User',
-    su: 'su'
+    Admin: 'Admin', //Org administrator
+    Lecturer: 'Lecturer', //Org lecturer
+    User: 'User', //Standard app user
+    su: 'su' //Developer/SuperUser account
 }
