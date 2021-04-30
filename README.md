@@ -1,27 +1,24 @@
 # TestED
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.6.
+Web application for taking exams online. 
 
-## Development server
+## About
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Originally made in PHP in 2018 as a school project, now turned into a personal project where I learn to make a full stack MEAN application.
 
-## Code scaffolding
+## Setup guide
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+This app requires MongoDB database instance. Learn how to create/install one [here](https://docs.mongodb.com/manual/installation/)
+Clone the app and run `npm i` to install all packages. 
+Next, create a `.env` file where you need to declare some variables:
 
-## Build
+```
+TOKEN_SECRET=[random string for token encription]
+MONGO_DB=[mongodb database address] eg. mongodb://localhost:27017/testED
+API_PORT=[port for the API]
+NODE_ENV=[local or production]
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Also, remember to modify Angular's enviroment file's api endpoint if you need to.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+To run the app, first start the API server with `npm start:server` and then start the Agular app with `ng serve`.
