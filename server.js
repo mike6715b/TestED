@@ -43,7 +43,7 @@ const onListening = () => {
     debug("Listening on " + bind);
 };
 
-const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
+const port = process.env.NODE_ENV === 'production' ? process.env.PORT : 4000;
 console.log("Listening on port: " + port);
 app.set("port", port);
 
