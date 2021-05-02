@@ -16,8 +16,10 @@ Originally made in PHP in 2018 as a school project, now turned into a personal p
 ## Setup guide
 
 This app requires MongoDB database instance. Learn how to create/install one [here](https://docs.mongodb.com/manual/installation/)
+
 Clone the app and run `npm i` to install all packages. 
-Next, create a `.env` file where you need to declare some variables:
+
+Next, create a `.env` file where you will need to declare some variables:
 
 ```
 TOKEN_SECRET=[random string for token encription]
@@ -34,5 +36,7 @@ To run the app, first start the API server with `npm run start:server` and then 
 ## Contributions
 
 If you have found this reposetory and wish to contribute, first of all.. Thank you! 
+
 Since this is a personal project, I'm mainly looking for people telling me my short falls and maybe some bad practises so I can improve as I develop.
+
 You can look at the project roadmap and see some features I'm working on and provide feedback.
